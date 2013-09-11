@@ -1,37 +1,38 @@
 // http://marlonyao.iteye.com/blog/776775
 // only set string value  
-function setPreferenceValue(branch, name, value) {  
-    var prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch(branch);  
-    var str = Components.classes["@mozilla.org/supports-string;1"].createInstance(Components.interfaces.nsISupportsString);  
-    str.data = value;  
-    prefs.setComplexValue(name, Components.interfaces.nsISupportsString, str);  
-}  
-function getPreferenceValue(branch, name) {  
+function setPreferenceValue(branch, name, value) {
+    var prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch(branch);
+    var str = Components.classes["@mozilla.org/supports-string;1"].createInstance(Components.interfaces.nsISupportsString);
+    str.data = value;
+    prefs.setComplexValue(name, Components.interfaces.nsISupportsString, str);
+}
+function getPreferenceValue(branch, name) {
     var prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch(branch);
     //if (prefs.prefHasUserValue(name)) {
-        return prefs.getComplexValue(name, Components.interfaces.nsISupportsString).data;
+    return prefs.getComplexValue(name, Components.interfaces.nsISupportsString).data;
     //} else {
-      //  return null;
+    //  return null;
     //}  
 }
 
-function setIntPreferenceValue(branch, name, value) {  
+function setIntPreferenceValue(branch, name, value) {
     var prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch(branch);
-    prefs.setIntPref(name,value);
-}  
-function getIntPreferenceValue(branch, name) {  
+    prefs.setIntPref(name, value);
+}
+function getIntPreferenceValue(branch, name) {
     var prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch(branch);
     return prefs.getIntPref(name);
 }
 
-commands.addUserCommand (["autoproxy", "ap"], "change autoproxy status",
-    function (args) {  
+
+commands.addUserCommand(["autoproxy", "ap"], "Change autoproxy status",
+    function (args) {
         if (args.length == 0) { // print current autoproxy status
             var mode = getPreferenceValue("extensions.autoproxy.", "proxyMode");
-			//if (mode == null)
-			//{
-			//	mode = 'auto';
-			//}
+            //if (mode == null)
+            //{
+            //	mode = 'auto';
+            //}
             liberator.echomsg("proxyMode is " + mode);
         } else {
             var arg = args[0].toLowerCase();
@@ -52,55 +53,54 @@ commands.addUserCommand (["autoproxy", "ap"], "change autoproxy status",
                 liberator.echoerr("mode should be one of 'disabled', 'auto' or 'global'");
             }
         }
-    }, {  
-        argCount: "?",  
-    }  
-    );
-
-    commands.addUserCommand (["switchproxy", "sp"], "switch autoproxy status",
-        function (args) {  
-            if (args.length == 0) {
-                var mode = getPreferenceValue("extensions.autoproxy.", "proxyMode");
-			//if (mode == null)
-			if (mode == 'auto')
-			{
-				//mode = 'auto';
-				newmode = 'global';
-				setPreferenceValue("extensions.autoproxy.", "proxyMode", newmode);
-				liberator.echomsg("proxyMode is " + mode +", switch proxyMode to " + newmode);
-			}
-			else if (mode == 'global'){
-             newmode = 'auto';
-             setPreferenceValue("extensions.autoproxy.", "proxyMode", newmode);
-             liberator.echomsg("proxyMode is " + mode +", switch proxyMode to " + newmode);
-         }
-         else {
-             liberator.echoerr("proxyMode is not 'auto' or 'global'");
-         }
-     }
-     else {
-      liberator.echoerr("We dont need args...");
-  }
-}, {  
-    argCount: "?",
-}
+    }, {
+        argCount: "?",
+    }
 );
 
-    commands.addUserCommand (["switchdefaultproxy", "sdp"], "switch autoproxy default proxy",
-        function (args) {
-            if (args.length == 0) {
-                var default_proxy = getIntPreferenceValue("extensions.autoproxy.", "default_proxy");
-                liberator.echomsg("default proxy is " + default_proxy);
-            } else {
-             if (isNaN(args)) {
+commands.addUserCommand(["switchproxy", "sp"], "Switch autoproxy status",
+    function (args) {
+        if (args.length == 0) {
+            var mode = getPreferenceValue("extensions.autoproxy.", "proxyMode");
+            //if (mode == null)
+            if (mode == 'auto') {
+                //mode = 'auto';
+                newmode = 'global';
+                setPreferenceValue("extensions.autoproxy.", "proxyMode", newmode);
+                liberator.echomsg("proxyMode is " + mode + ", switch proxyMode to " + newmode);
+            }
+            else if (mode == 'global') {
+                newmode = 'auto';
+                setPreferenceValue("extensions.autoproxy.", "proxyMode", newmode);
+                liberator.echomsg("proxyMode is " + mode + ", switch proxyMode to " + newmode);
+            }
+            else {
+                liberator.echoerr("proxyMode is not 'auto' or 'global'");
+            }
+        }
+        else {
+            liberator.echoerr("We dont need args...");
+        }
+    }, {
+        argCount: "?",
+    }
+);
+
+commands.addUserCommand(["switchdefaultproxy", "sdp"], "Switch autoproxy default proxy",
+    function (args) {
+        if (args.length == 0) {
+            var default_proxy = getIntPreferenceValue("extensions.autoproxy.", "default_proxy");
+            liberator.echomsg("default proxy is " + default_proxy);
+        } else {
+            if (isNaN(args)) {
+                liberator.echoerr("default proxy should be number");
+            }
+            else {
                 setIntPreferenceValue("extensions.autoproxy.", "default_proxy", args);
                 liberator.echomsg("switch autoproxy default proxy to " + args);
             }
-            else {
-             liberator.echoerr("default proxy should be number");
-         }
-     }
- }, {
-    argCount: "?",
-}
+        }
+    }, {
+        argCount: "?",
+    }
 );
