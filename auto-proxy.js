@@ -24,6 +24,10 @@ function getIntPreferenceValue(branch, name) {
     return prefs.getIntPref(name);
 }
 
+function refresh() {
+	tabs.reload(config.browser.mCurrentTab);
+}
+
 
 commands.addUserCommand(["autoproxy", "ap"], "Change autoproxy status",
     function (args) {
@@ -31,7 +35,7 @@ commands.addUserCommand(["autoproxy", "ap"], "Change autoproxy status",
             var mode = getPreferenceValue("extensions.autoproxy.", "proxyMode");
             //if (mode == null)
             //{
-            //	mode = 'auto';
+            //	mode = 'auto';f
             //}
             liberator.echomsg("proxyMode is " + mode);
         } else {
@@ -99,6 +103,36 @@ commands.addUserCommand(["switchdefaultproxy", "sdp"], "Switch autoproxy default
                 setIntPreferenceValue("extensions.autoproxy.", "default_proxy", args);
                 liberator.echomsg("switch autoproxy default proxy to " + args);
             }
+        }
+    }, {
+        argCount: "?",
+    }
+);
+
+commands.addUserCommand(["switchproxyrefresh", "spr"], "Switch autoproxy status and refresh",
+    function (args) {
+        if (args.length == 0) {
+            var mode = getPreferenceValue("extensions.autoproxy.", "proxyMode");
+            //if (mode == null)
+            if (mode == 'auto') {
+                //mode = 'auto';
+                newmode = 'global';
+                setPreferenceValue("extensions.autoproxy.", "proxyMode", newmode);
+                liberator.echomsg("proxyMode is " + mode + ", switch proxyMode to " + newmode);
+                refresh();
+            }
+            else if (mode == 'global') {
+                newmode = 'auto';
+                setPreferenceValue("extensions.autoproxy.", "proxyMode", newmode);
+                liberator.echomsg("proxyMode is " + mode + ", switch proxyMode to " + newmode);
+                refresh();
+            }
+            else {
+                liberator.echoerr("proxyMode is not 'auto' or 'global'");
+            }
+        }
+        else {
+            liberator.echoerr("We dont need args...");
         }
     }, {
         argCount: "?",
