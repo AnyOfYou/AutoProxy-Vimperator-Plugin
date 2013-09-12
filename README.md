@@ -1,7 +1,7 @@
 AutoProxy-Vimperator-Plugin
 ===========================
 
-AutoProxy的Vimperator插件
+[AutoProxy](https://addons.mozilla.org/en-US/firefox/addon/autoproxy/)的Vimperator插件
 修改于[marlonyao](http://marlonyao.iteye.com/blog/776775)的代码
 
 * :ap [auto|disable|global] - 切换不同模式,无参数则显示当前的代理模式.
