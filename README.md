@@ -1,4 +1,4 @@
-AutoProxy_Vimperator_Plugin
+AutoProxy-Vimperator-Plugin
 ===========================
 
 AutoProxy的Vimperator插件
