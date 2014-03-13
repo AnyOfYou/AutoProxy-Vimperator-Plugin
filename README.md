@@ -1,5 +1,4 @@
 #AutoProxy-Vimperator-Plugin
-===========================
 
 [AutoProxy](https://addons.mozilla.org/en-US/firefox/addon/autoproxy/)和[FoxyProxy](https://addons.mozilla.org/en-US/firefox/addon/foxyproxy-standard/)的Vimperator插件
 修改于[marlonyao](http://marlonyao.iteye.com/blog/776775)的代码
