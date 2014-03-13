@@ -138,3 +138,126 @@ commands.addUserCommand(["switchproxyrefresh", "spr"], "Switch autoproxy status 
         argCount: "?",
     }
 );
+
+//foxyproxy.xml下的<proxy name
+var EurekaVPT = "2024895854";
+var ShadowSocks = "3449804312";
+var GoAgent = "2566479489";
+var Default = "3213569921";
+var Patterns = "patterns";
+var Disabled = "disabled";
+
+var ShadowSocks_Name = "ShadowSocks";
+var GoAgent_Name = "GoAgent";
+var Default_Name = "Default";
+var EurekaVPT_Name = "EurekaVPT";
+var Patterns_Name = "Patterns";
+var Disabled_Name = "Disabled";
+
+commands.addUserCommand(["foxyproxy","fp"],"set FoxyProxy Mode",
+	function (args) {
+	if (args.length == 0){
+		var proxyMode;
+		switch (foxyproxy.fp.mode){
+		case ShadowSocks:
+			proxyMode = ShadowSocks_Name;
+			break;
+		case GoAgent:
+			proxyMode = GoAgent_Name;
+			break;
+		case Default:
+			proxyMode = Default_Name;
+			break;
+		case Patterns:
+			proxyMode = Patterns_Name;
+			break;
+		case Disabled:
+			proxyMode = Disabled_Name;
+			break; 
+        case EurekaVPT:
+            proxyMode = EurekaVPT_Name;
+            break;
+		default:
+			proxyMode = foxyproxy.fp.mode;
+		}
+		liberator.echomsg(proxyMode);
+	}
+	else if (args == ShadowSocks_Name || args == "ss" || args == "s"){
+	foxyproxy.fp.setMode(ShadowSocks, true);
+	liberator.echomsg(ShadowSocks_Name);
+}
+ else if (args == GoAgent_Name || args == "ga" || args == "g"){
+	foxyproxy.fp.setMode(GoAgent,true);
+	liberator.echomsg(GoAgent_Name);
+} else if (args == Default_Name || args == "df"){
+	foxyproxy.fp.setMode(Default,true);
+	liberator.echomsg(Default_Name);
+} else if (args == Patterns_Name || args == "pt" || args == "p"){
+	foxyproxy.fp.setMode(Patterns,true);
+	liberator.echomsg(Patterns_Name);
+}else if (args == Disabled_Name || args == "da"){
+	foxyproxy.fp.setMode(Disabled,true);
+	liberator.echomsg(Disabled_Name);
+}else if (args == EurekaVPT_Name || args =="erk" || args == "e"){
+    foxyproxy.fp.setMode(EurekaVPT,true);
+    liberator.echomsg(EurekaVPT_Name)
+}
+}
+);
+
+commands.addUserCommand(["foxyproxyrefresh","fpr"],"set FoxyProxy Mode and refresh",
+	function (args) {
+	if (args.length == 0){
+		var proxyMode;
+		switch (foxyproxy.fp.mode){
+		case ShadowSocks:
+			proxyMode = ShadowSocks_Name;
+			break;
+		case GoAgent:
+			proxyMode = GoAgent_Name;
+			break;
+		case Default:
+			proxyMode = Default_Name;
+			break;
+		case Patterns:
+			proxyMode = Patterns_Name;
+			break;
+		case Disabled:
+			proxyMode = Disabled_Name;
+			break; 
+        case EurekaVPT:
+            proxyMode = EurekaVPT_Name;
+            break;
+		default:
+			proxyMode = foxyproxy.fp.mode;
+		}
+		liberator.echomsg(proxyMode);
+	}
+	else if (args == ShadowSocks_Name || args == "ss" || args == "s"){
+	foxyproxy.fp.setMode(ShadowSocks, true);
+	liberator.echomsg(ShadowSocks_Name);
+	refresh();
+}
+ else if (args == GoAgent_Name || args == "ga" || args == "g"){
+	foxyproxy.fp.setMode(GoAgent,true);
+	liberator.echomsg(GoAgent_Name);
+	refresh();
+} else if (args == Default_Name || args == "df"){
+	foxyproxy.fp.setMode(Default,true);
+	liberator.echomsg(Default_Name);
+	refresh();
+} else if (args == Patterns_Name || args == "pt" || args == "p"){
+	foxyproxy.fp.setMode(Patterns,true);
+	liberator.echomsg(Patterns_Name);
+	refresh();
+}else if (args == Disabled_Name || args == "da"){
+	foxyproxy.fp.setMode(Disabled,true);
+	liberator.echomsg(Disabled_Name);
+	refresh();
+}else if (args == EurekaVPT_Name || args =="erk" || args == "e"){
+    foxyproxy.fp.setMode(EurekaVPT,true);
+    liberator.echomsg(EurekaVPT_Name)
+    refresh();
+}
+}
+);
